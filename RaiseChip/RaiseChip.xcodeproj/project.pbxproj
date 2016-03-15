@@ -58,14 +58,10 @@
 		88AF91771C7F57C200262FB2 /* RaiseChip */ = {
 			isa = PBXGroup;
 			children = (
-				88AF917B1C7F57C200262FB2 /* AppDelegate.h */,
-				88AF917C1C7F57C200262FB2 /* AppDelegate.m */,
-				88AF917E1C7F57C200262FB2 /* ViewController.h */,
-				88AF917F1C7F57C200262FB2 /* ViewController.m */,
-				88AF91811C7F57C200262FB2 /* Main.storyboard */,
-				88AF91841C7F57C200262FB2 /* Assets.xcassets */,
-				88AF91861C7F57C200262FB2 /* LaunchScreen.storyboard */,
-				88AF91891C7F57C200262FB2 /* Info.plist */,
+				88AF918F1C7F580100262FB2 /* Other */,
+				88AF91911C7F581B00262FB2 /* Model */,
+				88AF91901C7F581100262FB2 /* Controller */,
+				88AF91921C7F583300262FB2 /* View */,
 				88AF91781C7F57C200262FB2 /* Supporting Files */,
 			);
 			path = RaiseChip;
@@ -77,6 +73,42 @@
 				88AF91791C7F57C200262FB2 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		88AF918F1C7F580100262FB2 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				88AF91891C7F57C200262FB2 /* Info.plist */,
+				88AF91811C7F57C200262FB2 /* Main.storyboard */,
+				88AF91841C7F57C200262FB2 /* Assets.xcassets */,
+				88AF91861C7F57C200262FB2 /* LaunchScreen.storyboard */,
+				88AF917B1C7F57C200262FB2 /* AppDelegate.h */,
+				88AF917C1C7F57C200262FB2 /* AppDelegate.m */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		88AF91901C7F581100262FB2 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				88AF917E1C7F57C200262FB2 /* ViewController.h */,
+				88AF917F1C7F57C200262FB2 /* ViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		88AF91911C7F581B00262FB2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		88AF91921C7F583300262FB2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,9 +294,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = RaiseChip/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ysc.RaiseChip;
+				PRODUCT_BUNDLE_IDENTIFIER = ysc.RaiseChipBLE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -273,9 +307,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = RaiseChip/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ysc.RaiseChip;
+				PRODUCT_BUNDLE_IDENTIFIER = ysc.RaiseChipBLE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -299,6 +335,7 @@
 				88AF918E1C7F57C200262FB2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

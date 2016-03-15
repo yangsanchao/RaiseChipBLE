@@ -1,25 +1,103 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="iYh-qd-WJ9">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--RaiseChip-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2zn-Jd-eWm">
+                                <rect key="frame" x="208" y="294" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="d2P-To-gTy"/>
+                                    <constraint firstAttribute="height" constant="80" id="kfy-v2-HpN"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="lock"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FYA-tO-yat">
+                                <rect key="frame" x="88" y="294" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="2Eh-yH-ZqN"/>
+                                    <constraint firstAttribute="height" constant="80" id="rpr-Hy-Xmm"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="unlock"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="中芯睿智(北京)微电子科技有限公司                         Copyright ©️ RaiseChip" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKy-ia-Ehl">
+                                <rect key="frame" x="65" y="605" width="267" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击打开车锁" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="js2-pk-FW1">
+                                <rect key="frame" x="77" y="388" width="102" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击关闭车锁" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mwR-4u-BeN">
+                                <rect key="frame" x="197" y="388" width="102" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="FYA-tO-yat" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="9Nf-ha-dcn"/>
+                            <constraint firstItem="js2-pk-FW1" firstAttribute="top" secondItem="FYA-tO-yat" secondAttribute="bottom" constant="14" id="E50-9a-SK8"/>
+                            <constraint firstItem="2zn-Jd-eWm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="60" id="MVf-N0-ozX"/>
+                            <constraint firstItem="mwR-4u-BeN" firstAttribute="leading" secondItem="js2-pk-FW1" secondAttribute="trailing" constant="18" id="Rw6-Z0-Fbr"/>
+                            <constraint firstItem="js2-pk-FW1" firstAttribute="centerX" secondItem="FYA-tO-yat" secondAttribute="centerX" id="XAM-Wn-LOC"/>
+                            <constraint firstItem="FYA-tO-yat" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-60" id="a3t-Qr-Fyb"/>
+                            <constraint firstItem="2zn-Jd-eWm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="g3S-Cp-EN3"/>
+                            <constraint firstItem="mwR-4u-BeN" firstAttribute="top" secondItem="2zn-Jd-eWm" secondAttribute="bottom" constant="14" id="mZF-Fr-be9"/>
+                            <constraint firstItem="mwR-4u-BeN" firstAttribute="leading" secondItem="js2-pk-FW1" secondAttribute="trailing" constant="18" id="oxi-Js-IT7"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="RaiseChip" id="v5E-gZ-ozp"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="lockBtn" destination="FYA-tO-yat" id="MBv-zk-3Uk"/>
+                        <outlet property="unlockBtn" destination="2zn-Jd-eWm" id="vHx-oX-I4U"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1069.5" y="284.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="L04-x6-Pv6">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iYh-qd-WJ9" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VO4-Mx-sWk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="UJa-k9-vFp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4u8-8E-b06" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="257" y="284"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="lock" width="375" height="375"/>
+        <image name="unlock" width="128" height="128"/>
+    </resources>
 </document>
