@@ -9,27 +9,26 @@
 
 #import "ViewController.h"
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "AppDelegate.h"
 
 @interface ViewController ()<CBCentralManagerDelegate,CBPeripheralDelegate>
 
-@property (nonatomic,strong) CBCentralManager *centralManager;
-@property (nonatomic,strong) NSMutableArray *peripherals;
-@property (nonatomic, strong) CBPeripheral *peripheral;
+@property (nonatomic,strong) CBCentralManager *centralManager;  //中央管理者
+
+@property (nonatomic,strong) NSMutableArray *peripherals;       //设备数组
+@property (nonatomic, strong) CBPeripheral *peripheral;         //设备
+@property (nonatomic, strong) CBCharacteristic *characteristic; //特征
+
 
 @property (weak, nonatomic) IBOutlet UIButton *lockBtn;
 @property (weak, nonatomic) IBOutlet UIButton *unlockBtn;
 
+@property (weak, nonatomic) IBOutlet UIImageView *line;
+@property (weak, nonatomic) IBOutlet UIImageView *Hline;
 @end
 
 @implementation ViewController
 
-- (CBCentralManager *)centralManager {
-
-    if (!_centralManager) {
-        _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()];
-    }
-    return _centralManager;
-}
 - (NSMutableArray *)peripherals
 {
     if (!_peripherals) {
@@ -42,17 +41,38 @@ static NSString * const kServiceUUID = @"FFE5";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    AppDelegate *app = [UIApplication sharedApplication].delegate;
+    app.line = self.line;
+    
+    self.line.layer.anchorPoint = CGPointMake(0.15, 0.5);
+    
     [self setBtnCornerRadius];
+    
     // 1.中央管理者 lazy
     // 2.扫描设备  --> 发现设备  -->展示设备  -->选择设备 -->连接设备
-    _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()];
+    self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()];
     
 }
+
+- (void)setBtnCornerRadius{
+    
+    self.lockBtn.layer.masksToBounds = YES;
+    self.lockBtn.layer.cornerRadius = 40;
+    
+    self.unlockBtn.layer.masksToBounds = YES;
+    self.unlockBtn.layer.cornerRadius = 40;
+    
+    self.line.layer.masksToBounds = YES;
+    self.line.layer.cornerRadius = 5;
+    
+    self.Hline.layer.masksToBounds = YES;
+    self.Hline.layer.cornerRadius = 5;
+    
+}
+
 #pragma mark - CBCentralManagerDelegate
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
     
-    NSLog(@"centralManagerDidUpdateState:%ld",(long)central.state);
     switch (central.state) {
         case CBCentralManagerStateUnknown:
             NSLog(@"CBCentralManagerStateUnknown");
@@ -70,18 +90,20 @@ static NSString * const kServiceUUID = @"FFE5";
             NSLog(@"CBCentralManagerStatePoweredOff");
             break;
         case CBCentralManagerStatePoweredOn:
-            [self scanBluetooth];               //很重要，当蓝牙处于打开状态，开始扫描。
+            [self scanBluetooth];
+            //当蓝牙处于打开状态，开始扫描。
             break;
         default:
             NSLog(@"蓝牙未工作在正确状态");
             break;
     }
 }
+/**
+ * 扫描蓝牙设备
+ */
 - (void)scanBluetooth {
-
     NSDictionary *optionDic = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:CBCentralManagerScanOptionAllowDuplicatesKey];
     [_centralManager scanForPeripheralsWithServices:nil options:optionDic];
-    NSLog(@"centralManager: %@",_centralManager);
 }
 
 /**
@@ -99,7 +121,7 @@ static NSString * const kServiceUUID = @"FFE5";
     }
 
     // 这里添加一个列表供用户选择
-    NSLog(@"peripheral : %@",peripheral);
+    NSLog(@"\n发现的蓝牙设备：peripheral : %@ \n\n",peripheral);
 
     [self.peripherals enumerateObjectsUsingBlock:^(CBPeripheral  *peripheral, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([peripheral.name isEqualToString:@"Tv221u-796A7148"]) {
@@ -112,7 +134,7 @@ static NSString * const kServiceUUID = @"FFE5";
 - (void)connectPeripheral:(CBPeripheral *)peripheral
 {
     [self.centralManager connectPeripheral:peripheral options:nil];
-    NSLog(@"%s",__func__);
+    NSLog(@"\n设备正在连接：%@ \n\n",peripheral);
 }
 
 
@@ -121,8 +143,7 @@ static NSString * const kServiceUUID = @"FFE5";
  */
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
 {
-    NSLog(@"%s",__func__);
-    // 3.扫描服务
+    NSLog(@"\n设备已经连接，开始扫描服务：%s\n\n",__func__);
     //扫描所有服务
     [peripheral discoverServices:nil];
     //设置代理
@@ -134,13 +155,14 @@ static NSString * const kServiceUUID = @"FFE5";
  */
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
 {
-    NSLog(@"\n\n peripheral.services%@",peripheral.services);
+    NSLog(@"\n 已经扫描到设备的服务peripheral.services %@ \n\n",peripheral.services);
     // 遍历所有服务
     for (CBService *service in peripheral.services) {
         // 找到需要的服务
         if ([service.UUID.UUIDString isEqualToString:@"FFE5"]) {
             // 4.扫描特征
             [peripheral discoverCharacteristics:nil forService:service];
+            self.peripheral = peripheral;
         }
     }
 }
@@ -150,44 +172,54 @@ static NSString * const kServiceUUID = @"FFE5";
  */
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
 {
-    NSLog(@"service.characteristics : %@",service.characteristics);
-    // 遍历所有特征
+    NSLog(@"\n当扫描到特征时调用：service.characteristics : %@\n\n",service.characteristics);
+    
     for (CBCharacteristic *characteristic in service.characteristics) {
-        //  找到需要的特征
+        
         if ([characteristic.UUID.UUIDString isEqualToString:@"FFE9"]) {
-            NSLog(@"\n== characteristic: %@",characteristic);
-            // 发送数据
-            // 读取数据
-            [peripheral readValueForCharacteristic:characteristic];
+            if (error) {
+                NSLog(@"didDiscoverCharacteristicsForService error:%@",[error localizedDescription]);
+                return;
+            }
+            self.characteristic = characteristic;
+            //重要，将满足条件的特征保存为全局特征，以便对齐进行写入操作。
+            [self.peripheral setNotifyValue:YES forCharacteristic:
+             characteristic];
             
-            int data1 = 0x0014;
-            NSData *data = [NSData dataWithBytes:&data1 length:2];
-            NSLog(@"data: %@",data);
-            
-            // 写入数据
-            [peripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
+            NSLog(@"\n满足条件的特征 peripheral: %@ \n\n",self.characteristic);
         }
     }
-}
-
-- (void)writeData {
-
-    int data1 = 0014;
-    
-    NSData *data = [NSData dataWithBytes:&data1 length:20];
 }
 
 
 #pragma mark Set UI
 
-- (void)setBtnCornerRadius{
 
-    self.lockBtn.layer.masksToBounds = YES;
-    self.lockBtn.layer.cornerRadius = 40;
-    
-    self.unlockBtn.layer.masksToBounds = YES;
-    self.unlockBtn.layer.cornerRadius = 40;
-    
+- (IBAction)open:(UIButton *)sender {
+
+    [UIView animateWithDuration:3 animations:^{
+        self.line.transform =  CGAffineTransformMakeRotation(0);
+         NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+        [user setValue:@(0) forKey:@"value"];
+    }];
+    [self writeDataWihtCommand:@"dw"];
+}
+
+
+- (IBAction)close:(UIButton *)sender {
+    [UIView animateWithDuration:4 animations:^{
+        self.line.transform =  CGAffineTransformMakeRotation(-M_PI_2);
+        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+        [user setValue:@(1) forKey:@"value"];
+    }];
+    [self writeDataWihtCommand:@"up"];
+}
+
+- (void)writeDataWihtCommand:(NSString *)command {
+    //write
+    NSData *data = [command dataUsingEncoding:NSASCIIStringEncoding];
+    [_peripheral writeValue:data forCharacteristic:_characteristic type:CBCharacteristicWriteWithResponse];
+    [_peripheral readValueForCharacteristic:_characteristic];
 }
 
 @end

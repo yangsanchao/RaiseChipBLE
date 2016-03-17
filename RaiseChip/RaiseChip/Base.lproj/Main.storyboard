@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--RaiseChip-->
@@ -24,6 +26,9 @@
                                     <constraint firstAttribute="height" constant="80" id="kfy-v2-HpN"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="lock"/>
+                                <connections>
+                                    <action selector="close:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HKG-sa-dFk"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FYA-tO-yat">
                                 <rect key="frame" x="88" y="294" width="80" height="80"/>
@@ -32,6 +37,9 @@
                                     <constraint firstAttribute="height" constant="80" id="rpr-Hy-Xmm"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="unlock"/>
+                                <connections>
+                                    <action selector="open:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ivU-7s-3OW"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="中芯睿智(北京)微电子科技有限公司                         Copyright ©️ RaiseChip" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKy-ia-Ehl">
                                 <rect key="frame" x="65" y="605" width="267" height="41"/>
@@ -39,14 +47,34 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击打开车锁" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="js2-pk-FW1">
-                                <rect key="frame" x="77" y="388" width="102" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击开锁" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="js2-pk-FW1">
+                                <rect key="frame" x="94" y="388" width="68" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击关闭车锁" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mwR-4u-BeN">
-                                <rect key="frame" x="197" y="388" width="102" height="21"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="SPa-m7-M9n">
+                                <rect key="frame" x="36" y="244" width="300" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="h2P-bE-Lii"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="X8S-if-oTh">
+                                <rect key="frame" x="56" y="244" width="285" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="1QF-Ly-Mnl"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="10" id="JmY-DL-0qn"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="hOr-OV-dd2"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="wzZ-nk-3GS">
+                                <rect key="frame" x="112" y="233" width="150" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="Xn2-hY-cRR"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击锁住" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mwR-4u-BeN">
+                                <rect key="frame" x="214" y="388" width="68" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -55,19 +83,29 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="FYA-tO-yat" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="9Nf-ha-dcn"/>
-                            <constraint firstItem="js2-pk-FW1" firstAttribute="top" secondItem="FYA-tO-yat" secondAttribute="bottom" constant="14" id="E50-9a-SK8"/>
+                            <constraint firstItem="mwR-4u-BeN" firstAttribute="top" secondItem="2zn-Jd-eWm" secondAttribute="bottom" constant="14" id="B5U-BR-Qtu"/>
+                            <constraint firstItem="mwR-4u-BeN" firstAttribute="centerX" secondItem="2zn-Jd-eWm" secondAttribute="centerX" id="B7o-mj-Zai"/>
+                            <constraint firstItem="FYA-tO-yat" firstAttribute="top" secondItem="SPa-m7-M9n" secondAttribute="bottom" constant="40" id="FEl-BK-KTO"/>
                             <constraint firstItem="2zn-Jd-eWm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="60" id="MVf-N0-ozX"/>
-                            <constraint firstItem="mwR-4u-BeN" firstAttribute="leading" secondItem="js2-pk-FW1" secondAttribute="trailing" constant="18" id="Rw6-Z0-Fbr"/>
-                            <constraint firstItem="js2-pk-FW1" firstAttribute="centerX" secondItem="FYA-tO-yat" secondAttribute="centerX" id="XAM-Wn-LOC"/>
+                            <constraint firstItem="X8S-if-oTh" firstAttribute="top" secondItem="wzZ-nk-3GS" secondAttribute="bottom" constant="1" id="Mxe-Mg-gqI"/>
+                            <constraint firstItem="js2-pk-FW1" firstAttribute="centerX" secondItem="FYA-tO-yat" secondAttribute="centerX" id="ODp-cD-icO"/>
+                            <constraint firstItem="FYA-tO-yat" firstAttribute="top" secondItem="X8S-if-oTh" secondAttribute="bottom" constant="40" id="QCG-Wt-ECR"/>
+                            <constraint firstItem="SPa-m7-M9n" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="WbW-qK-fCq"/>
                             <constraint firstItem="FYA-tO-yat" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-60" id="a3t-Qr-Fyb"/>
+                            <constraint firstItem="X8S-if-oTh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="40" id="bXS-t6-nto"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SPa-m7-M9n" secondAttribute="trailing" constant="23" id="bwd-KW-shw"/>
+                            <constraint firstItem="wzZ-nk-3GS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dOx-gx-MFc"/>
                             <constraint firstItem="2zn-Jd-eWm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="g3S-Cp-EN3"/>
-                            <constraint firstItem="mwR-4u-BeN" firstAttribute="top" secondItem="2zn-Jd-eWm" secondAttribute="bottom" constant="14" id="mZF-Fr-be9"/>
-                            <constraint firstItem="mwR-4u-BeN" firstAttribute="leading" secondItem="js2-pk-FW1" secondAttribute="trailing" constant="18" id="oxi-Js-IT7"/>
+                            <constraint firstItem="js2-pk-FW1" firstAttribute="top" secondItem="FYA-tO-yat" secondAttribute="bottom" constant="14" id="gcG-i8-AZS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="X8S-if-oTh" secondAttribute="trailing" constant="18" id="sxL-8h-fCL"/>
+                            <constraint firstItem="wzZ-nk-3GS" firstAttribute="width" secondItem="SPa-m7-M9n" secondAttribute="width" multiplier="0.5" id="wWU-48-U27"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="RaiseChip" id="v5E-gZ-ozp"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="Hline" destination="X8S-if-oTh" id="WTF-wn-axd"/>
+                        <outlet property="line" destination="wzZ-nk-3GS" id="nOZ-fQ-qiU"/>
                         <outlet property="lockBtn" destination="FYA-tO-yat" id="MBv-zk-3Uk"/>
                         <outlet property="unlockBtn" destination="2zn-Jd-eWm" id="vHx-oX-I4U"/>
                     </connections>
@@ -97,7 +135,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="lock" width="375" height="375"/>
+        <image name="line" width="360" height="47"/>
+        <image name="lock" width="128" height="128"/>
         <image name="unlock" width="128" height="128"/>
     </resources>
 </document>
