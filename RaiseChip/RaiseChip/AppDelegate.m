@@ -39,8 +39,12 @@
         NSInteger value = [[user objectForKey:@"value"] integerValue];
         if (value == 0) {
             self.line.transform = CGAffineTransformMakeRotation(0);
+//            self.unlockBtn.enabled = YES;
+//            self.lockBtn.enabled = NO;
         } else {
             self.line.transform = CGAffineTransformMakeRotation(-M_PI_2);
+//            self.unlockBtn.enabled = NO;
+//            self.lockBtn.enabled = YES;
         }
     }
 }

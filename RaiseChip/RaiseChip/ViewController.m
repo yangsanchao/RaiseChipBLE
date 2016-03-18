@@ -43,6 +43,8 @@ static NSString * const kServiceUUID = @"FFE5";
     [super viewDidLoad];
     AppDelegate *app = [UIApplication sharedApplication].delegate;
     app.line = self.line;
+    app.lockBtn = self.lockBtn;
+    app.unlockBtn = self.unlockBtn;
     
     self.line.layer.anchorPoint = CGPointMake(0.15, 0.5);
     
@@ -58,9 +60,11 @@ static NSString * const kServiceUUID = @"FFE5";
     
     self.lockBtn.layer.masksToBounds = YES;
     self.lockBtn.layer.cornerRadius = 40;
+    self.lockBtn.enabled = NO;
     
     self.unlockBtn.layer.masksToBounds = YES;
     self.unlockBtn.layer.cornerRadius = 40;
+    self.unlockBtn.enabled = NO;
     
     self.line.layer.masksToBounds = YES;
     self.line.layer.cornerRadius = 5;
@@ -121,7 +125,7 @@ static NSString * const kServiceUUID = @"FFE5";
     }
 
     // 这里添加一个列表供用户选择
-    NSLog(@"\n发现的蓝牙设备：peripheral : %@ \n\n",peripheral);
+    //NSLog(@"\n发现的蓝牙设备：peripheral : %@ \n\n",peripheral);
 
     [self.peripherals enumerateObjectsUsingBlock:^(CBPeripheral  *peripheral, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([peripheral.name isEqualToString:@"Tv221u-796A7148"]) {
@@ -134,7 +138,7 @@ static NSString * const kServiceUUID = @"FFE5";
 - (void)connectPeripheral:(CBPeripheral *)peripheral
 {
     [self.centralManager connectPeripheral:peripheral options:nil];
-    NSLog(@"\n设备正在连接：%@ \n\n",peripheral);
+    //NSLog(@"\n设备正在连接：%@ \n\n",peripheral);
 }
 
 
@@ -143,7 +147,7 @@ static NSString * const kServiceUUID = @"FFE5";
  */
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
 {
-    NSLog(@"\n设备已经连接，开始扫描服务：%s\n\n",__func__);
+    //NSLog(@"\n设备已经连接，开始扫描服务：%s\n\n",__func__);
     //扫描所有服务
     [peripheral discoverServices:nil];
     //设置代理
@@ -155,7 +159,7 @@ static NSString * const kServiceUUID = @"FFE5";
  */
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
 {
-    NSLog(@"\n 已经扫描到设备的服务peripheral.services %@ \n\n",peripheral.services);
+    //NSLog(@"\n 已经扫描到设备的服务peripheral.services %@ \n\n",peripheral.services);
     // 遍历所有服务
     for (CBService *service in peripheral.services) {
         // 找到需要的服务
@@ -172,7 +176,7 @@ static NSString * const kServiceUUID = @"FFE5";
  */
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
 {
-    NSLog(@"\n当扫描到特征时调用：service.characteristics : %@\n\n",service.characteristics);
+    //NSLog(@"\n当扫描到特征时调用：service.characteristics : %@\n\n",service.characteristics);
     
     for (CBCharacteristic *characteristic in service.characteristics) {
         
@@ -182,44 +186,55 @@ static NSString * const kServiceUUID = @"FFE5";
                 return;
             }
             self.characteristic = characteristic;
-            //重要，将满足条件的特征保存为全局特征，以便对齐进行写入操作。
-            [self.peripheral setNotifyValue:YES forCharacteristic:
-             characteristic];
-            
-            NSLog(@"\n满足条件的特征 peripheral: %@ \n\n",self.characteristic);
+            //将满足条件的特征保存为全局特征，以便对齐进行写入操作。
+            self.lockBtn.enabled = YES;
+            self.unlockBtn.enabled = YES;
+            //NSLog(@"\n满足条件的特征 peripheral: %@ \n\n",self.characteristic);
         }
     }
 }
 
-
 #pragma mark Set UI
 
-
 - (IBAction)open:(UIButton *)sender {
+    [self writeDataWihtCommand:@"dw"];
+    self.lockBtn.enabled = NO;
 
     [UIView animateWithDuration:3 animations:^{
         self.line.transform =  CGAffineTransformMakeRotation(0);
          NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
         [user setValue:@(0) forKey:@"value"];
+    }completion:^(BOOL finished) {
+        self.unlockBtn.enabled = YES;
     }];
-    [self writeDataWihtCommand:@"dw"];
+    
+
+
 }
 
 
 - (IBAction)close:(UIButton *)sender {
+    
+    [self writeDataWihtCommand:@"up"];
+    self.unlockBtn.enabled = NO;
+
     [UIView animateWithDuration:4 animations:^{
         self.line.transform =  CGAffineTransformMakeRotation(-M_PI_2);
         NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
         [user setValue:@(1) forKey:@"value"];
+
+    }completion:^(BOOL finished) {
+        self.lockBtn.enabled = YES;
     }];
-    [self writeDataWihtCommand:@"up"];
+    
+
+
 }
 
 - (void)writeDataWihtCommand:(NSString *)command {
     //write
     NSData *data = [command dataUsingEncoding:NSASCIIStringEncoding];
     [_peripheral writeValue:data forCharacteristic:_characteristic type:CBCharacteristicWriteWithResponse];
-    [_peripheral readValueForCharacteristic:_characteristic];
 }
 
 @end

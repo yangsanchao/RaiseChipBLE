@@ -13,6 +13,7 @@
 @property (strong, nonatomic) UIWindow *window;
 
 @property (nonatomic, strong) UIImageView *line;
-
+@property (weak, nonatomic)  UIButton *lockBtn;
+@property (weak, nonatomic)  UIButton *unlockBtn;
 @end
 
